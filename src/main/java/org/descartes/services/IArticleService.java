@@ -16,5 +16,5 @@ public interface IArticleService extends IService{
 	public abstract Compte getAuteur(String title);
 	public abstract Article findArticle(String title);
 	public abstract void addArticle( String title,Compte auteur, String text);
-	
+	public abstract List<Article> getAllArticlesByAuteur(Compte auteur);
 }

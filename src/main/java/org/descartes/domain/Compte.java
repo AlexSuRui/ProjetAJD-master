@@ -5,7 +5,7 @@
  */
 package org.descartes.domain;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -21,7 +21,7 @@ public class Compte {
 	String password;
 	long id;
 	String type;
-	Set<Article> articles;
+	List<Article> articles;
 
 	public Compte() {
 		super();
@@ -70,10 +70,10 @@ public class Compte {
 
 	}
 	@OneToMany(cascade = CascadeType.ALL)
-	public Set<Article> getArticles(){
+	public List<Article> getArticles(){
 		return articles;
 	}
-	public void setArticles(Set<Article> articles){
+	public void setArticles(List<Article> articles){
 		this.articles = articles;
 	}
 

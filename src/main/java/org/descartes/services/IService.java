@@ -20,6 +20,7 @@ public interface IService {
 	
 	public abstract Compte findCompte(String identifiant); 
 	public abstract List<?> findAll();
-	public abstract void addCompte(String identifiant, String password);
+	public abstract Compte addCompte(String identifiant, String password);
 	public abstract void modifyPassword(String identifiant, String password);
+	public abstract List<Article> getAllArticlesByAuteur(Compte auteur);
 }

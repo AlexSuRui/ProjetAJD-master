@@ -21,10 +21,13 @@
 	                        <a href="/addArticle">Add an article</a>
 	                    </li>
 	                    <li>
-	                        <a href="#services">Services</a>
+	                        <a href="/login">Sign in</a>
 	                    </li>
 	                    <li>
-	                        <a href="#contact">Contact</a>
+	                        <a href="/signup">Sign up</a>
+	                    </li>
+	                    <li>
+	                        <a href="/logout">Log out</a>
 	                    </li>
 	                </ul>
 	            </div>
@@ -49,50 +52,39 @@
 			        	</span>
 		      		</div>
 		    	</div>
-		    	<div class="col-sm-9">
+		    	<div class="col-sm-6">
 		    		<div th:each="article : ${articles}">
 			    		
 			    		<h4><small>RECENT POSTS</small></h4>
 			    		  <hr/>
 					      <h2><a th:href="@{/article?(title=${article.title})}"><span th:text="${article.title}"></span></a></h2>
-					  
+					  	  <h5><span class="label label-danger">Food</span> <span class="label label-primary">Test</span></h5>
 					      <p><span th:text="${article.text}"></span></p>
 					      <br/><br/>
 				    </div>
 					    <form role="form">
 					        <div class="form-group">
-					         
+					         	<textarea class="form-control" rows="3"></textarea>
 					        </div>
 					        <button type="submit" class="btn btn-success">Submit</button>
 					    </form>			
 				      	<p><span class="badge">2</span> Comments:</p> 
 				      	<div class="row">
 				        	<div class="col-sm-2 text-center">
-				          		
+				          		<img src="img/user.jpg" class="img-circle" height="65" width="65" alt="Avatar"/>
 				        	</div>
 				        	<div class="col-sm-10">
 				          		<h4>Anja <small>Sep 29, 2015, 9:12 PM</small></h4>
-				          		<p>Keep up the GREAT work! I am cheering for you!! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+				          		<p>Keep up the GREAT work! I am cheering for you!! </p>
 				          		<br/>
 				        	</div>
 				        	<div class="col-sm-2 text-center">
-				          		
+				          		<img src="/img/user.jpg" class="img-circle" height="65" width="65" alt="Avatar"/>
 				        	</div>
 				        	<div class="col-sm-10">
 				          		<h4>John Row <small>Sep 25, 2015, 8:25 PM</small></h4>
-				          		<p>I am so happy for you man! Finally. I am looking forward to read about your trendy life. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+				          		<p>I am so happy for you man! Finally. I am looking forward to read about your trendy life.</p>
 				          		<br/>
-				          		<p><span class="badge">1</span> Comment:</p><br/>
-					          	<div class="row">
-					            	<div class="col-sm-2 text-center">
-					              		
-					            	</div>
-					            	<div class="col-xs-10">
-					              		<h4>Nested Bro <small>Sep 25, 2015, 8:28 PM</small></h4>
-					              		<p>Me too! WOW!</p>
-					              		<br/>
-					            	</div>
-					          	</div>
 		    				</div>
 		    			</div>
 	      		</div>

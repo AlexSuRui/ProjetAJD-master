@@ -5,6 +5,7 @@
  */
 package org.descartes.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -51,7 +52,7 @@ public class SystemService implements ICompteService, IArticleService {
 	}
 
 	@Override
-	public void addCompte(String identifiant, String password) {
+	public Compte addCompte(String identifiant, String password) {
 		// TODO Auto-generated method stub
 		EntityTransaction tx = entityManager.getTransaction();
 		tx.begin();
@@ -59,6 +60,7 @@ public class SystemService implements ICompteService, IArticleService {
 		entityManager.persist(p);
 //		this.addArticle("My first blog",p );
 		tx.commit();
+		return p;
 
 	}
 
@@ -81,6 +83,8 @@ public class SystemService implements ICompteService, IArticleService {
 		return (List<Article>) liste;
 	}
 
+	
+	
 	@Override
 	public Article findArticle(String title) {
 		// TODO Auto-generated method stub
@@ -103,8 +107,21 @@ public class SystemService implements ICompteService, IArticleService {
 		EntityTransaction tx = entityManager.getTransaction();
 		tx.begin();
 		Article p = new Article(title, auteur,text);
+		List<Article> list = auteur.getArticles();
+		list.add(p);
+		auteur.setArticles(list);
 		entityManager.persist(p);
+		entityManager.merge(auteur);
 		tx.commit();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Article> getAllArticlesByAuteur(Compte auteur) {
+		List<?> liste = entityManager.createQuery("SELECT p FROM Article p WHERE p.compte_id LIKE :auteurArticle")
+				.setParameter("auteurArticle", auteur.getId()).getResultList();
+		// TODO Auto-generated method stub
+		return  null;
 	}
 
 }

@@ -5,6 +5,9 @@ package org.descartes.controller;
  */
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.descartes.domain.Article;
 import org.descartes.domain.Compte;
 import org.descartes.services.SystemService;
@@ -14,15 +17,17 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.SessionAttributes;
 //import org.springframework.web.bind.annotation.RestController;
 //@RestController 
+
+@SessionAttributes("user")
 @Controller
 @EnableAutoConfiguration 
 public class RestWebService {
@@ -35,13 +40,24 @@ public class RestWebService {
 	 * @return index page
 	 */
 	@RequestMapping(value = "")
-	public String indexAction(Model model){
-		Compte compte = serviceSystem.findCompte("RuiSU");
-		List<Article> articles = serviceSystem.getAllArticles();
+	public String indexAction(Model model, HttpSession session, HttpServletRequest request){
+		List<Article> articles;
+		Compte compte = (Compte) request.getSession().getAttribute("compte");
+//		Compte compte = (Compte) session.getAttribute("compte");
+//		Compte compte = serviceSystem.findCompte("Rui_SU");
+		
+		if(compte!=null){
+			 articles = compte.getArticles();
+			 System.out.println(articles);
+		}else{
+			 articles= null;
+		}
+//		model.addAttribute("compte", compte);
 		model.addAttribute("articles", articles);
 		return "index";
 	}
 	/**
+	 * Action login
 	 * @param model
 	 */
 	@RequestMapping(value = "/login")
@@ -57,13 +73,42 @@ public class RestWebService {
 	 * @return
 	 */
 	@RequestMapping(value = "/validLogin", method = RequestMethod.POST)
-	public String getCompte(@RequestParam(value="identifiant") String identifiant, @RequestParam(value="password") String password){
+	public String valideLogin(@RequestParam(value="identifiant") String identifiant, @RequestParam(value="password") String password, HttpSession session){
 		System.out.println(identifiant);
 		Compte compte = serviceSystem.findCompte(identifiant.substring(1));
 		if(compte.getPassword().equals(password.substring(1))){
-			return "index";
+			session.setAttribute("compte", compte);
+			return "redirect:/";
 		}else
-			return "comptes/login";
+			return "redirect:/login";
+	}
+	
+	 @RequestMapping(value = "/logout")
+     public String logout(HttpSession session ) {
+        session.invalidate();
+        return "redirect:/login.html";
+     }
+	
+	/**
+	 * Action sign up
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/signup")
+	public String signupAction(Model model){
+		model.addAttribute("compte", new Compte());
+		return "/comptes/signup";
+	}
+	/**
+	 * 
+	 */
+	@RequestMapping(value = "/validSignup", method = RequestMethod.POST)
+	public String valideSignup(@RequestParam(value="identifiant") String identifiant, @RequestParam(value="password") String password){
+		Compte compte = serviceSystem.addCompte(identifiant.substring(1), password.substring(1));
+		if(compte != null){
+			return "redirect:/login";
+		}else
+			return "redirect:/signup";
 	}
 	
 	/**
@@ -143,9 +188,9 @@ public class RestWebService {
 	 * @return
 	 */
 	@RequestMapping(value ="/createArticle", method = RequestMethod.POST)
-	public String postArticle(@RequestParam String title,@RequestParam String text){
-		Compte auteur = serviceSystem.findCompte("RuiSU");
+	public String postArticle(@RequestParam String title,@RequestParam String text,HttpSession session, HttpServletRequest request){
+		Compte auteur = (Compte) request.getSession().getAttribute("compte");
 		serviceSystem.addArticle(title, auteur,text);
-		return "/index";
+		return "redirect:/";
 	}
 }
