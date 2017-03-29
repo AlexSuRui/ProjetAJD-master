@@ -1,0 +1,72 @@
+<html xmlns:th="http://www.thymeleaf.org" >
+	<head>
+		<title> Get start</title>
+		<link rel="stylesheet" type="text/css" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    </head>
+    <body>
+    	<nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+    		<div class="container topnav">
+    			<div class="navbar-header">
+    				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+	                    <span class="sr-only">Toggle navigation</span>
+	                    <span class="icon-bar"></span>
+	                    <span class="icon-bar"></span>
+	                    <span class="icon-bar"></span>
+	                </button>
+	                <a class="navbar-brand topnav" href="#">Welcome <span th:text="${compte.identifiant}"></span></a>
+    			</div>
+    			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	                <ul class="nav navbar-nav navbar-right">
+	                    <li>
+	                        <a href="/addArticle">About</a>
+	                    </li>
+	                    <li>
+	                        <a href="#services">Services</a>
+	                    </li>
+	                    <li>
+	                        <a href="#contact">Contact</a>
+	                    </li>
+	                </ul>
+	            </div>
+    		</div>
+    	</nav>
+		<div class="container-fluid" style="margin-top: 80px">
+			<!-- Page Content -->
+		    <div class="container">
+		        <div class="row">
+		
+		            <!-- Blog Post Content Column -->
+		            <div class="col-lg-8">
+		
+		
+		                <!-- Title -->
+		
+		                <!-- Author -->
+		                <p class="lead">
+		                    by <a href="#">Start Bootstrap</a>
+		                </p>
+		
+		                <hr/>
+						<table>
+			    			<tr>
+			    				<th>ID</th>
+			    				<th>Title</th>
+			    				<th>Date</th>
+			    				<th>Text</th>
+			    			</tr>
+			    			<tr th:each="article : ${articles}">
+			    				<td th:text="${article.id}"></td>
+			    				<td th:text="${article.title}"></td>
+			    				<td th:text="${article.date}"></td>
+			    				<td th:text="${article.text}"></td>
+			    			</tr>
+			    		</table>
+		               	
+		                
+		                <hr/>
+		           </div>
+		        </div>
+		    </div>
+		</div>
+    </body>
+ </html>

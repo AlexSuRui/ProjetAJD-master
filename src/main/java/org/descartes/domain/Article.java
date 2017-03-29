@@ -5,6 +5,7 @@
  */
 package org.descartes.domain;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -18,10 +19,10 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Article {
 	
-	long id;
+	Long id;
 	String title;
 	Compte auteur;
-	SimpleDateFormat date;
+//	String date;
 	String text;
 	public Article(){
 		super();
@@ -29,35 +30,43 @@ public class Article {
 	
 	public Article(String title){
 		this.title = title;
-		this.date = new SimpleDateFormat("yyyy-MM-dd");
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		Date date = new Date();
+//		this.date = dateFormat.format(date);
 	}
 	
 	public Article(Compte auteur){
 		this.title ="default title";
 		this.auteur = auteur;
-            this.date = new SimpleDateFormat("yyyy-MM-dd");
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		Date date = new Date();
+//		this.date = dateFormat.format(date);
 	}
 	
 	public Article(String title, Compte auteur){
 		this.title = title;
 		this.auteur = auteur;
-		this.date = new SimpleDateFormat("yyyy-MM-dd");
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		Date date = new Date();
+//		this.date = dateFormat.format(date);
 	}
 	
 	public Article(String title, Compte auteur, String text){
 		this.title= title;
 		this.auteur = auteur;
-		this.date= new SimpleDateFormat("yyyy-MM-dd");
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		Date date = new Date();
+//		this.date = dateFormat.format(date);
 		this.text = text;
 	}
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	
@@ -79,13 +88,13 @@ public class Article {
 		this.title = title;
 	}
 	
-	public SimpleDateFormat getDate(){
-		return date;
-	}
+//	public String getDate(){
+//		return date;
+//	}
 	
-	public void setDate(SimpleDateFormat date){
-		this.date = date;
-	}
+//	public void setDate(String date){
+//		this.date = date;
+//	}
 	
 	public String getText(){
 		return text;

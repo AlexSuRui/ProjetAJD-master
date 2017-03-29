@@ -12,7 +12,7 @@ import org.descartes.domain.Compte;
 
 public interface IArticleService extends IService{
 
-	public abstract List<Article> findArticles();
+	public abstract List<Article> getAllArticles();
 	public abstract Compte getAuteur(String title);
 	public abstract Article findArticle(String title);
 	public abstract void addArticle( String title,Compte auteur, String text);
