@@ -42,17 +42,14 @@ public class RestWebService {
 	@RequestMapping(value = "")
 	public String indexAction(Model model, HttpSession session, HttpServletRequest request){
 		List<Article> articles;
-		Compte compte = (Compte) request.getSession().getAttribute("compte");
-//		Compte compte = (Compte) session.getAttribute("compte");
-//		Compte compte = serviceSystem.findCompte("Rui_SU");
-		
+		Compte compte = (Compte) request.getSession().getAttribute("compte");		
 		if(compte!=null){
 			 articles = compte.getArticles();
 			 System.out.println(articles);
 		}else{
 			 articles= null;
 		}
-//		model.addAttribute("compte", compte);
+		model.addAttribute("compte", compte);
 		model.addAttribute("articles", articles);
 		return "index";
 	}
