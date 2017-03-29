@@ -9,6 +9,7 @@
 	    
 	    <class>org.descartes.domain.Article</class>
 	    <class>org.descartes.domain.Compte</class>
+	    <class>org.descartes.domain.Commentaire</class>
 	  
 	    <exclude-unlisted-classes>true</exclude-unlisted-classes>
 	    

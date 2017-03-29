@@ -14,11 +14,12 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
 import org.descartes.domain.Article;
+import org.descartes.domain.Commentaire;
 import org.descartes.domain.Compte;
 //import org.descartes.factory.Factory;
 //import org.descartes.factory.IFactory;
 
-public class SystemService implements ICompteService, IArticleService {
+public class SystemService implements IService {
 
 	EntityManager entityManager;
 //	IFactory factory;
@@ -122,6 +123,30 @@ public class SystemService implements ICompteService, IArticleService {
 				.setParameter("auteurArticle", auteur.getId()).getResultList();
 		// TODO Auto-generated method stub
 		return  null;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Commentaire> findCommentaireByArticle(Article article) {
+		// TODO Auto-generated method stub
+		List<Commentaire> liste = entityManager.createQuery("SELECT p FROM Commentaire p WHERE p.Article_id LIKE :auteurArticle")
+				.setParameter("auteurArticle", article.getId()).getResultList();
+		return liste;
+	}
+
+	@Override
+	public void addCommentaire(String text, Compte auteur, Article article) {
+		// TODO Auto-generated method stub
+		EntityTransaction tx = entityManager.getTransaction();
+		tx.begin();
+		Commentaire comment = new Commentaire(text,auteur,article);
+		List<Commentaire> list = article.getComments();
+		list.add(comment);
+		article.setComments(list);
+		entityManager.persist(comment);
+		entityManager.persist(article);
+		tx.commit();
+			
 	}
 
 }

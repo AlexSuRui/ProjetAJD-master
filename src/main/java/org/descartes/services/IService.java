@@ -7,6 +7,7 @@ package org.descartes.services;
 
 import java.util.List;
 import org.descartes.domain.Article;
+import org.descartes.domain.Commentaire;
 import org.descartes.domain.Compte;
 /**
  *
@@ -23,4 +24,7 @@ public interface IService {
 	public abstract Compte addCompte(String identifiant, String password);
 	public abstract void modifyPassword(String identifiant, String password);
 	public abstract List<Article> getAllArticlesByAuteur(Compte auteur);
+	
+	public abstract List<Commentaire> findCommentaireByArticle(Article article);
+	public abstract void addCommentaire( String text, Compte auteur, Article article);
 }

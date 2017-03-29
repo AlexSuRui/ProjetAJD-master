@@ -9,8 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.descartes.domain.Article;
+import org.descartes.domain.Commentaire;
 import org.descartes.domain.Compte;
 import org.descartes.services.SystemService;
+import org.eclipse.persistence.internal.sessions.coordination.corba.sun.CommandDataHelper;
 //import org.descartes.services.ICompteService;
 import org.descartes.services.IService;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -160,10 +162,14 @@ public class RestWebService {
 	public String getArticle(@RequestParam(value="title") String title, Model model){
 		Article article =  serviceSystem.findArticle(title);
 		Compte compte = article.getAuteur();
+		List<Commentaire> commentaires = article.getComments();
 		model.addAttribute("article", article);
 		model.addAttribute("compte", compte);
+		model.addAttribute("commentaires", commentaires);
+		model.addAttribute("commentaire", new Commentaire());
 		return "/articles/showArticle";
 	}
+	
 	
 	@RequestMapping(value = "/article/{auteur}", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
@@ -187,7 +193,23 @@ public class RestWebService {
 	@RequestMapping(value ="/createArticle", method = RequestMethod.POST)
 	public String postArticle(@RequestParam String title,@RequestParam String text,HttpSession session, HttpServletRequest request){
 		Compte auteur = (Compte) request.getSession().getAttribute("compte");
-		serviceSystem.addArticle(title, auteur,text);
-		return "redirect:/";
+		if(auteur!=null){
+			serviceSystem.addArticle(title, auteur,text);
+			return "redirect:/";
+		}else{
+			return "redirect:/addArticle";
+		}
+	}
+	
+	@RequestMapping(value ="/createCommentaire", method = RequestMethod.POST)
+	public String postCommentaire(@RequestParam String text, HttpServletRequest request){
+		Article article = serviceSystem.findArticle("example");
+		Compte auteur  = (Compte)request.getSession().getAttribute("compte");
+		if(auteur !=null){
+			serviceSystem.addCommentaire(text, auteur, article);
+			return "redirect:/article?title="+article.getTitle();
+		}else
+			return "redirect:/";
+		
 	}
 }

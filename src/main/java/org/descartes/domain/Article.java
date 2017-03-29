@@ -5,16 +5,16 @@
  */
 package org.descartes.domain;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Article {
@@ -24,38 +24,40 @@ public class Article {
 	Compte auteur;
 //	String date;
 	String text;
+	List<Commentaire> comments;
+	
 	public Article(){
 		super();
 	}
 	
 	public Article(String title){
 		this.title = title;
-		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-		Date date = new Date();
+//		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+//		Date date = new Date();
 //		this.date = dateFormat.format(date);
 	}
 	
 	public Article(Compte auteur){
 		this.title ="default title";
 		this.auteur = auteur;
-		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-		Date date = new Date();
+//		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+//		Date date = new Date();
 //		this.date = dateFormat.format(date);
 	}
 	
 	public Article(String title, Compte auteur){
 		this.title = title;
 		this.auteur = auteur;
-		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-		Date date = new Date();
+//		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+//		Date date = new Date();
 //		this.date = dateFormat.format(date);
 	}
 	
 	public Article(String title, Compte auteur, String text){
 		this.title= title;
 		this.auteur = auteur;
-		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-		Date date = new Date();
+//		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+//		Date date = new Date();
 //		this.date = dateFormat.format(date);
 		this.text = text;
 	}
@@ -107,5 +109,13 @@ public class Article {
 	public String toString() {
 		return "Article [title" + title + "]";
 
+	}
+	@OneToMany(cascade = CascadeType.ALL)
+	public List<Commentaire> getComments(){
+		return comments;
+	}
+	
+	public void setComments(List<Commentaire> comments){
+		this.comments = comments;
 	}
 }
