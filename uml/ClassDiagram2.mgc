@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ClassDiagram>
+    <Class name="org.descartes.services.IArticleService" x="214" y="552">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="org.descartes.services.IService"/>
+    </Class>
+    <Class name="org.descartes.services.IService" x="287" y="396">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="org.descartes.services.SystemService" x="42" y="232">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="org.descartes.services.IService"/>
+    </Class>
+    <Class name="org.descartes.controller.RestWebService" x="435" y="75">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association
+            destinationClassName="org.descartes.services.IService"
+            endpointName="serviceSystem" kind="Simple"/>
+        <Communication destinationClassName="org.descartes.services.IService"/>
+    </Class>
+    <Class name="org.descartes.services.ICompteService" x="453" y="538">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="org.descartes.services.IService"/>
+    </Class>
+</ClassDiagram>

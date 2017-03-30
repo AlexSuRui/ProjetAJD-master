@@ -1,0 +1,25 @@
+.navbar-descartes{
+    background-color:#ffffff;
+    border-style: solid;
+    border-color: #e44444;
+}
+.nav > li > a{
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px transparent;
+    overflow: hidden;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-property: color, background-color;
+    transition-property: color, background-color;
+}
+.nav > li > a:hover, .nav > li > a:focus, .nav > li > a:active{
+    background-color: #e44444;
+    color: white;   
+}
+
+#btn-mid{
+	margin-left:40%
+}

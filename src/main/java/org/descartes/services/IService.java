@@ -11,7 +11,7 @@ import org.descartes.domain.Commentaire;
 import org.descartes.domain.Compte;
 /**
  *
- * @author alexgreen
+ *  @author: RuiSU, githbu:alexgreen
  */
 public interface IService {
     public abstract List<Article> getAllArticles();

@@ -2,29 +2,21 @@
 	<head>
 		<title> Get start</title>
 		<link rel="stylesheet" type="text/css" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/main.css"/>
     </head>
     <body>
-    	<nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+    	<nav class="navbar navbar-descartes navbar-fixed-top topnav" role="navigation">
     		<div class="container topnav">
     			<div class="navbar-header">
-    				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-	                    <span class="sr-only">Toggle navigation</span>
-	                    <span class="icon-bar"></span>
-	                    <span class="icon-bar"></span>
-	                    <span class="icon-bar"></span>
-	                </button>
-	                <a class="navbar-brand topnav" href="/">Welcome</a>
+    				<img src="/img/descarets.png " height="50"/>
     			</div>
     			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	                <ul class="nav navbar-nav navbar-right">
 	                    <li>
-	                        <a href="/addArticle">About</a>
+	                        <a href="/addArticle" th:unless="${compte == null}">Add an article</a>
 	                    </li>
 	                    <li>
-	                        <a href="#services">Services</a>
-	                    </li>
-	                    <li>
-	                        <a href="#contact">Contact</a>
+	                        <a href="/logout" th:if="${compte != null}">Log out</a>
 	                    </li>
 	                </ul>
 	            </div>
@@ -50,15 +42,16 @@
 		                
 		                <hr/>
 		                <h4>Leave a Comment:</h4>
-					    <form role="form" th:action="@{/createCommentaire}" th:object="${commentaire}" method="post">
+					    <form role="form" th:action="@{/createCommentaire}" method="post">
 					        <div class="form-group">
-					        	<input type="hidden" th:field="${article}" value="${article}" />
-					         	<textarea class="form-control" rows="3" th:field="*{text}" ></textarea>
+					        	<input type="hidden" th:field="${article.title}" value="${article.title}" />
+					         	<textarea class="form-control" rows="3" th:field="${commentaire.text}"></textarea>
 					        </div>
 					        <button type="submit" class="btn btn-success">Submit</button>
 					    </form>			
 				      	<p><span class="badge">2</span> Comments:</p> 
 				      	<div class="row">
+				      	<!-- An example of comment  -->
 				      		<div>
 					        	<div class="col-sm-2 text-center">
 					          		<img src="img/user.jpg" class="img-circle" height="65" width="65" alt="Avatar"/>
@@ -69,16 +62,6 @@
 					          		<br/>
 					        	</div>
 					        </div>
-					        <div>
-				        		<div class="col-sm-2 text-center">
-				          			<img src="/img/user.jpg" class="img-circle" height="65" width="65" alt="Avatar"/>
-				        		</div>
-				        		<div class="col-sm-10">
-				          			<h4>John Row <small>Sep 25, 2015, 8:25 PM</small></h4>
-				          			<p>I am so happy for you man! Finally. I am looking forward to read about your trendy life.</p>
-				          			<br/>
-		    					</div>
-		    				</div>
 		    				<div th:each="commentaire : ${commentaires}">
 		    					<div class="col-sm-2 text-center">
 				          			<img src="/img/user.jpg" class="img-circle" height="65" width="65" alt="Avatar"/>

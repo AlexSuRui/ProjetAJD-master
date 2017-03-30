@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PackageAnalysis>
+    <Package name="org.descartes" x="330" y="68"/>
+    <Package name="org.descartes.controller" x="300" y="124">
+        <DependencyLink destination="org.descartes.services"/>
+        <DependencyLink destination="org.descartes.domain"/>
+    </Package>
+    <Package name="org.descartes.domain" x="200" y="222"/>
+    <Package name="org.descartes.services" x="521" y="230">
+        <DependencyLink destination="org.descartes.domain"/>
+    </Package>
+</PackageAnalysis>

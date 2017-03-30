@@ -1,6 +1,6 @@
 package org.descartes.controller;
 /*
- * @author: Rui SU
+ * @author: RuiSU, githbu:alexgreen
  * @description: This is the controller of this application using Thymeleaf as the html templates
  */
 import java.util.List;
@@ -55,7 +55,21 @@ public class RestWebService {
 		model.addAttribute("articles", articles);
 		return "index";
 	}
-	/**
+	@RequestMapping(value = "/index2")
+	public String index2Action(Model model, HttpSession session, HttpServletRequest request){
+		List<Article> articles;
+		Compte compte = (Compte) request.getSession().getAttribute("compte");
+		if(compte!=null){
+			 articles = compte.getArticles();
+			 System.out.println(articles);
+		}else{
+			 articles= null;
+		}
+		model.addAttribute("compte", compte);
+		model.addAttribute("articles", articles);
+		return "index2";
+	}
+	/*
 	 * Action login
 	 * @param model
 	 */
@@ -77,11 +91,15 @@ public class RestWebService {
 		Compte compte = serviceSystem.findCompte(identifiant.substring(1));
 		if(compte.getPassword().equals(password.substring(1))){
 			session.setAttribute("compte", compte);
-			return "redirect:/";
+			return "redirect:/index2";
 		}else
 			return "redirect:/login";
 	}
-	
+	/**
+	 * log out
+	 * @param session
+	 * @return
+	 */
 	 @RequestMapping(value = "/logout")
      public String logout(HttpSession session ) {
         session.invalidate();
@@ -99,7 +117,9 @@ public class RestWebService {
 		return "/comptes/signup";
 	}
 	/**
-	 * 
+	 * valid the form and create a compte
+	 * @param identifant
+	 * @param password
 	 */
 	@RequestMapping(value = "/validSignup", method = RequestMethod.POST)
 	public String valideSignup(@RequestParam(value="identifiant") String identifiant, @RequestParam(value="password") String password){
@@ -124,7 +144,11 @@ public class RestWebService {
 		return "/comptes/showComptes";
 		
 	}
-	
+	/**
+	 * unused
+	 * @param identifiant
+	 * @param password
+	 */
 	@RequestMapping(value = "/compte", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
 	public void postCompte(@RequestBody String identifiant, String password){
@@ -132,6 +156,11 @@ public class RestWebService {
 		serviceSystem.addCompte(identifiant, password);
 	}
 	
+	/**
+	 * unused
+	 * @param identifiant
+	 * @param password
+	 */
 	@RequestMapping(value = "/compte/{identifiant}", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
 	public void modifyPassword(@RequestBody String identifiant, String password){
@@ -170,16 +199,26 @@ public class RestWebService {
 		return "/articles/showArticle";
 	}
 	
-	
+	/**
+	 * unused
+	 * @param title
+	 * @return
+	 */
 	@RequestMapping(value = "/article/{auteur}", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public Compte getArticleAuteur(String title){
 		return serviceSystem.getAuteur(title);
 	}
-	
+	/**
+	 * unused
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/addArticle")
-	public String createArticleAction(Model model){
+	public String createArticleAction(Model model,HttpServletRequest request){
+		Compte compte = (Compte) request.getSession().getAttribute("compte");
+		model.addAttribute("compte", compte);
 		model.addAttribute("article", new Article());
 		return "/articles/addArticle";
 	}
@@ -201,9 +240,16 @@ public class RestWebService {
 		}
 	}
 	
+	/**
+	 * valid the form and create a comment
+	 * @param text
+	 * @param title
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value ="/createCommentaire", method = RequestMethod.POST)
-	public String postCommentaire(@RequestParam String text, HttpServletRequest request){
-		Article article = serviceSystem.findArticle("example");
+	public String postCommentaire(@RequestParam String text,@RequestParam String title, HttpServletRequest request){
+		Article article = serviceSystem.findArticle(title);
 		Compte auteur  = (Compte)request.getSession().getAttribute("compte");
 		if(auteur !=null){
 			serviceSystem.addCommentaire(text, auteur, article);
